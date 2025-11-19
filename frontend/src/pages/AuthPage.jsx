@@ -136,7 +136,7 @@ export default function AuthPage() {
                     <>
                         <div className="form-group">
                             <label>Full Name</label>
-                            <input name="full_name" type="text" placeholder="John Doe" onChange={handleChange} />
+                            <input name="full_name" type="text" placeholder="Nguyen Van A" onChange={handleChange} />
                             {errors.full_name && <span className="error">{errors.full_name}</span>}
                         </div>
                         <div className="form-row">
