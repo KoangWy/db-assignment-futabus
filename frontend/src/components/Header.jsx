@@ -12,9 +12,9 @@ const Header = () => {
         FUTABUS
       </div>
       <ul className="header-nav">
-        <li>Homepage</li>
-        <li>Schedule</li>
-        <li>Lookup</li>
+        <li onClick={() => navigate('/')}>Homepage</li>
+        <li onClick={() => navigate('/schedule')}>Schedule</li>
+        <li onClick={() => navigate('/lookup')}>Lookup</li>
       </ul>
       {/* Nút đăng nhập chuyển hướng sang trang /login */}
       <button className="login-button" onClick={() => navigate('/login')}>
