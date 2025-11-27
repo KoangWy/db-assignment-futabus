@@ -1,13 +1,13 @@
 from datetime import datetime, date
 import mysql.connector
-
+import os
 def db_connection():
     return mysql.connector.connect(
-    host="mysql-dbk25-database-system-k25.i.aivencloud.com",
-    port=24201,
-    user="avnadmin",
-    password="AVNS_g3dNFojw9XL5FBwUM-G",
-    database="defaultdb",
+    host=os.getenv("DB_HOST"),
+    port=os.getenv("PORT"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_NAME"),
     ssl_ca="ca.pem",
     ssl_verify_cert=True   # verify SSL certificate
 )
