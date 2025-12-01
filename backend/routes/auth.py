@@ -1,0 +1,120 @@
+from flask import Blueprint, request, jsonify
+from utils.database import db_connection
+import datetime
+
+auth_bp = Blueprint("auth", __name__)
+
+# --- API ĐĂNG KÝ ---
+@auth_bp.route("/register", methods=["POST"])
+def register():
+    data = request.get_json() or {}
+    role = data.get("role", "PASSENGER")
+    
+    full_name = data.get("full_name")
+    email = data.get("email")
+    phone = data.get("phone")
+    password = data.get("password")
+    gov_id = data.get("gov_id")
+    dob = data.get("dob")
+
+    conn = None
+    cursor = None
+    try:
+        conn = db_connection()
+        cursor = conn.cursor()
+
+        if role == "PASSENGER":
+            # Thứ tự tham số phải khớp với Procedure trong SQL
+            args = [full_name, dob, gov_id, email, phone, password, 0]
+            result_args = cursor.callproc('sp_create_passenger_account', args)
+            new_id = result_args[6] # Lấy tham số OUT cuối cùng
+            
+            conn.commit()
+            return jsonify({"success": True, "message": "Registration successful!", "userId": new_id}), 201
+        
+        elif role == "STAFF":
+             hire_date = data.get("hire_date", datetime.date.today())
+             operator_id = data.get("operator_id", "OP001")
+
+             args = [full_name, dob, gov_id, email, phone, password, hire_date, operator_id, 0]
+             result_args = cursor.callproc('sp_create_staff_account', args)
+             new_id = result_args[8]
+
+             conn.commit()
+             return jsonify({"success": True, "message": "Staff registration successful!", "userId": new_id}), 201
+        else:
+            return jsonify({"success": False, "message": "Invalid role"}), 400
+
+    except Exception as e:
+        if conn: conn.rollback()
+        print(f"Register Error: {e}")
+        return jsonify({"success": False, "message": str(e)}), 500
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
+
+# --- API ĐĂNG NHẬP ---
+@auth_bp.route("/login", methods=["POST"])
+def login():
+    data = request.get_json() or {}
+    email = data.get("email")
+    password = data.get("password")
+    role = data.get("role", "passenger").lower()
+
+    conn = None
+    cursor = None
+    try:
+        conn = db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        # [QUAN TRỌNG] Tìm theo cột acc_password
+        cursor.execute(
+            "SELECT * FROM account WHERE email = %s AND acc_password = %s", 
+            (email, password)
+        )
+        account = cursor.fetchone()
+
+        if not account:
+            return jsonify({"success": False, "message": "Incorrect email or password!"}), 401
+
+        account_id = account['account_id']
+        
+        # Kiểm tra Role
+        user_info = None
+        if role == 'passenger':
+            cursor.execute("""
+                SELECT ps.passenger_id as id, p.person_name as name 
+                FROM passenger ps 
+                JOIN person p ON ps.person_id = p.person_id 
+                WHERE p.account_id = %s
+            """, (account_id,))
+            user_info = cursor.fetchone()
+        elif role == 'staff':
+            cursor.execute("""
+                SELECT s.staff_id as id, p.person_name as name 
+                FROM staff s 
+                JOIN person p ON s.person_id = p.person_id 
+                WHERE p.account_id = %s
+            """, (account_id,))
+            user_info = cursor.fetchone()
+
+        if not user_info:
+            return jsonify({"success": False, "message": f"This account is not authorized as a {role.upper()}!"}), 403
+
+        return jsonify({
+            "success": True,
+            "message": "Login successful!",
+            "user": {
+                "name": user_info['name'],
+                "role": role.upper(),
+                "id": user_info['id'],
+                "accountId": account_id
+            }
+        }), 200
+
+    except Exception as e:
+        print(f"Login Error: {e}")
+        return jsonify({"success": False, "message": "System Error"}), 500
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
