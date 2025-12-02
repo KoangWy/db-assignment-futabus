@@ -1,48 +1,65 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../components/layout/Header';
+import Footer from '../components/layout/Footer';
+import SearchForm from '../components/features/SearchForm';
+import { FiCheckCircle, FiMap, FiShield } from 'react-icons/fi'; // Requires react-icons
 import '../App.css';
 
 export default function Homepage() {
+    // Trimmed features list to match student project scope
+    const features = [
+        {
+            icon: <FiMap />,
+            title: 'Extensive network',
+            desc: 'Connecting more than 20 provinces with hundreds of daily trips.',
+        },
+        {
+            icon: <FiShield />,
+            title: 'Safe & reliable',
+            desc: 'Trusted bus partners with on-time, on-route commitments.',
+        },
+        {
+            icon: <FiCheckCircle />,
+            title: 'Easy booking',
+            desc: 'Simple flow that locks seats instantly in just three steps.',
+        },
+    ];
+
     return (
         <>
             <Header />
-
-            <main style={{ maxWidth: 1100, margin: '2rem auto', padding: '0 1rem' }}>
-                <section style={{ display: 'flex', alignItems: 'center', gap: 24, marginBottom: 40 }}>
-                    <div style={{ flex: 1 }}>
-                        <h1 style={{ margin: '0 0 12px' }}>Welcome to Futabus</h1>
-                        <div style={{ display: 'flex', gap: 12 }}>
-                            <a href="/search" style={ctaStyle}>Search Trips</a>
-                            <a href="/routes" style={secondaryStyle}>View Routes</a>
+            <main className="homepage">
+                {/* === HERO SECTION === */}
+                <section className="hero-simple">
+                    <div className="hero-overlay">
+                        <div className="hero-text">
+                            <h1>Online Coach Ticket Booking System</h1>
+                        </div>
+                        
+                        {/* Search form lives here */}
+                        <div className="hero-search-container">
+                            <SearchForm />
                         </div>
                     </div>
+                </section>
 
-            
+                {/* === FEATURE SECTION (Keep to avoid empty space) === */}
+                <section className="features-simple">
+                    <div className="container">
+                        <h2 className="section-title">Why choose us?</h2>
+                        <div className="feature-grid-simple">
+                            {features.map((f, index) => (
+                                <div key={index} className="feature-item">
+                                    <div className="feature-icon">{f.icon}</div>
+                                    <h3>{f.title}</h3>
+                                    <p>{f.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </section>
             </main>
-
             <Footer />
         </>
     );
 }
-
-const ctaStyle = {
-    display: 'inline-block',
-    padding: '10px 16px',
-    background: '#0052cc',
-    color: '#fff',
-    borderRadius: 6,
-    textDecoration: 'none',
-    fontWeight: 600,
-};
-
-const secondaryStyle = {
-    display: 'inline-block',
-    padding: '10px 16px',
-    background: '#f3f6ff',
-    color: '#0052cc',
-    borderRadius: 6,
-    textDecoration: 'none',
-    fontWeight: 600,
-};

@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage.jsx';
 import AuthPage from './pages/AuthPage.jsx';
 import TicketLookup from './pages/TicketLookup.jsx';
+import SchedulePage from './pages/SchedulePage.jsx';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
 
           {/* Trang Tra cứu vé */}
           <Route path="/lookup" element={<TicketLookup />} />
+          
+          {/* Trang Lịch trình, đặt vé */}
+          <Route path="/schedule" element={<SchedulePage />} />
         </Routes>
       </div>
     </BrowserRouter>
