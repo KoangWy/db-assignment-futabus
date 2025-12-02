@@ -16,7 +16,7 @@ body {
   width: 100%;
 }
 
-/* === 1. Style cho Header === */
+/* === Header === */
 .header {
   display: flex;
   justify-content: space-around; /* Căn chỉnh các mục */
@@ -59,7 +59,7 @@ body {
 }
 
 
-/* === 2. Style cho Footer === */
+/* === Footer === */
 .footer {
   background-color: rgb(99, 164, 138);
   color: #ffffff;
@@ -139,7 +139,7 @@ body {
   color: #ccc;
 }
 
-/* === 3. Style cho Login/Register === */
+/* === Auth === */
 .auth-page {
   display: flex;
   justify-content: center;
@@ -268,7 +268,7 @@ body {
 }
 
 
-/* === 4. Style cho Ticket Lookup === */
+/* === Ticket Lookup === */
 .ticket-lookup-page {
   display: flex;
   justify-content: center;
@@ -310,3 +310,1000 @@ body {
   border-left: 4px solid #c62828;
 }
 
+
+
+/* === Search form - Modern Style === */
+.search-widget {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: -60px auto 0;
+  position: relative;
+  z-index: 10;
+  border: 1px solid #e7e7e7;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 8px 15px;
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--futa-orange);
+  background-color: #fff;
+}
+
+.input-icon {
+  color: #888;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.input-field {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: #aaa;
+}
+
+/* Hide the default date icon */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.swap-button,
+.swap-btn {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--futa-orange);
+  font-size: 20px;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.swap-button:hover,
+.swap-btn:hover {
+  transform: rotate(180deg);
+  background-color: #f7f7f7;
+}
+
+.search-btn {
+  background-color: var(--futa-orange);
+  color: white;
+  border: none;
+  padding: 0 30px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  height: 68px; /* Match height of input wrappers */
+  align-self: stretch; /* Make button same height as inputs */
+}
+
+.search-btn:hover {
+  background-color: var(--futa-dark-orange);
+}
+
+/* === Schedule Page === */
+.schedule-page {
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* Phần Search Box cam ở đầu trang */
+.search-section {
+  background-image: url('https://storage.googleapis.com/futa-busline-cms-upload/futa_bg_140d1a4e10/futa_bg_140d1a4e10.svg');
+  background-size: cover;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.search-container {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 1000px;
+}
+
+.search-title {
+  color: var(--futa-orange);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.search-form-inline {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end; /* Căn nút bấm thẳng hàng với input */
+  flex-wrap: wrap;
+}
+
+.form-group-inline {
+  flex: 1;
+  min-width: 200px;
+}
+
+.form-group-inline label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 15px;
+  height: 45px; /* Chiều cao cố định */
+}
+
+.search-btn-orange {
+  height: 45px;
+  padding: 0 30px;
+  background-color: var(--futa-orange);
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.search-btn-orange:hover {
+  background-color: var(--futa-dark-orange);
+}
+
+/* Phần hiển thị kết quả */
+.results-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.loading-text, .no-result {
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.trip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Card từng chuyến xe (Giống hình mẫu) */
+.trip-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.trip-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-color: var(--futa-orange);
+}
+
+.trip-info-left {
+  flex: 1;
+}
+
+.trip-route {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.trip-meta {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  font-size: 20px;
+  line-height: 0;
+  color: #ccc;
+}
+
+.trip-type {
+  background-color: #e8f5e9; /* Nền xanh nhạt */
+  color: #2e7d32; /* Chữ xanh lá */
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.trip-time-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.time-big {
+  font-size: 22px;
+  color: #333;
+}
+
+.arrow {
+  color: #999;
+}
+
+.location-text {
+  color: #555;
+  font-weight: 500;
+}
+
+.trip-info-right {
+  text-align: right;
+  min-width: 150px;
+}
+
+.trip-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--futa-orange);
+  margin-bottom: 10px;
+}
+
+.per-pax {
+  font-size: 13px;
+  color: #999;
+  font-weight: normal;
+}
+
+.btn-book {
+  background-color: #fff3e0; /* Nền cam rất nhạt */
+  color: var(--futa-dark-orange);
+  border: 1px solid var(--futa-orange);
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-book:hover {
+  background-color: var(--futa-orange);
+  color: white;
+}
+
+/* === Homepage === */
+.homepage {
+  background: linear-gradient(180deg, #fff, #f4f4f4 60%);
+  padding-bottom: 60px;
+}
+
+.hero {
+  display: flex;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px 20px;
+}
+
+.hero-content {
+  flex: 3;
+}
+
+.hero-panel {
+  flex: 2;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid #e2e2e2;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.hero-panel ul {
+  padding-left: 18px;
+  margin-top: 12px;
+  color: #444;
+  line-height: 1.6;
+}
+
+.panel-note {
+  margin-top: 20px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: #fff7f2;
+  color: var(--futa-dark-orange);
+  font-weight: 600;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 40px;
+  line-height: 1.2;
+  color: #1f1f1f;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: #4b4b4b;
+  max-width: 600px;
+  margin-bottom: 24px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.value-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.value-card {
+  flex: 1;
+  min-width: 160px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 14px;
+  padding: 18px;
+  border: 1px solid #f1f1f1;
+  backdrop-filter: blur(6px);
+}
+
+.value-card strong {
+  display: block;
+  font-size: 30px;
+  color: var(--futa-orange);
+}
+
+.value-card span {
+  font-size: 13px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 2px solid transparent;
+}
+
+.btn-primary {
+  background: var(--futa-orange);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #fff;
+  color: var(--futa-orange);
+  border-color: var(--futa-orange);
+}
+
+.btn-secondary:hover {
+  background: #fff7f2;
+}
+
+.hero-search {
+  max-width: 1100px;
+  margin: -30px auto 40px;
+  padding: 0 20px;
+}
+
+.feature-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 14px;
+  padding: 24px;
+  border: 1px solid #eee;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+}
+
+.feature-card h3 {
+  margin-top: 0;
+  color: #222;
+}
+
+.feature-card p {
+  color: #555;
+}
+
+.quote-section {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 0 20px;
+}
+
+.quote-card {
+  background: linear-gradient(135deg, #fff5ef, #ffffff);
+  border-radius: 20px;
+  padding: 40px;
+  border: 1px solid rgba(242, 101, 34, 0.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.quote-card p {
+  font-size: 20px;
+  color: #2c2c2c;
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.quote-card span {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #777;
+}
+
+/* === Schedule page extensions === */
+.filter-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 25px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+}
+
+.filter-control {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+}
+
+.filter-control select {
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid #d8d8d8;
+  padding: 0 10px;
+}
+
+.checkbox-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #444;
+}
+
+.results-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.results-heading {
+  margin-bottom: 18px;
+}
+
+.results-heading p {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #222;
+}
+
+.results-heading span {
+  font-size: 14px;
+  color: #777;
+}
+
+.results-summary h3 {
+  margin: 0 0 4px;
+}
+
+.summary-metrics {
+  display: flex;
+  gap: 30px;
+}
+
+.summary-metrics span {
+  display: block;
+  font-size: 12px;
+  color: #777;
+  text-transform: uppercase;
+}
+
+.summary-metrics strong {
+  font-size: 18px;
+  color: #222;
+}
+
+.trip-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-status {
+  background: #e7f5ff;
+  color: #1976d2;
+}
+
+.trip-notes {
+  font-size: 13px;
+  color: #666;
+  margin-top: 10px;
+}
+
+.seat-chip {
+  display: inline-flex;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #f4f8ff;
+  color: #1c4b82;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+  }
+
+  .results-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .summary-metrics {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+/* === GENERAL UTILS === */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* === HOMEPAGE NEW STYLE === */
+.hero-simple {
+  position: relative;
+  height: 500px; /* Chiều cao banner */
+  background-image: url('https://storage.googleapis.com/futa-busline-cms-upload/futa_bg_140d1a4e10/futa_bg_140d1a4e10.svg'); /* Hoặc thay bằng ảnh xe khách thật */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  background: rgba(0, 0, 0, 0.4); /* Lớp phủ tối để nổi bật chữ */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.hero-text {
+  text-align: center;
+  color: white;
+}
+
+.hero-text h1 {
+  font-size: 36px;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-text p {
+  font-size: 16px;
+  opacity: 0.9;
+  margin: 0;
+}
+
+/* Đè style cũ của Search Widget để nó đẹp hơn trong Hero */
+.hero-search-container .search-widget {
+  margin: 0; /* Bỏ margin âm cũ */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+}
+
+/* FEATURES SECTION */
+.features-simple {
+  padding: 60px 0;
+  background-color: #fff;
+}
+
+.section-title {
+  text-align: center;
+  color: var(--futa-orange);
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.feature-grid-simple {
+  display: flex;
+  justify-content: space-around;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.feature-item {
+  text-align: center;
+  max-width: 300px;
+}
+
+.feature-icon {
+  font-size: 40px;
+  color: var(--futa-orange);
+  margin-bottom: 15px;
+}
+
+.feature-item h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.feature-item p {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+
+/* === SCHEDULE PAGE NEW STYLE === */
+
+/* Sticky Filter Header */
+.schedule-header {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.schedule-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.mini-search-form {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.control-group label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #888;
+  margin-right: 5px;
+}
+
+.mini-search-form select, 
+.mini-search-form input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-search-small {
+  background: var(--futa-orange);
+  color: white;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.filters-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filters-inline select {
+  padding: 8px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Result Cards */
+.results-body {
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.results-status {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.trip-list-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.trip-item-card {
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid transparent;
+}
+
+.trip-item-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  border-color: var(--futa-orange);
+}
+
+/* Card Left: Timeline Info */
+.card-left {
+  flex: 3;
+  padding: 25px;
+  border-right: 1px dashed #eee;
+}
+
+.trip-time-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.time-point {
+  display: flex;
+  flex-direction: column;
+}
+
+.time-point .hour {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.time-point .place {
+  font-size: 14px;
+  color: #777;
+  max-width: 150px;
+}
+
+/* Timeline decoration */
+.duration-line {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 20px;
+}
+
+.duration-line .line {
+  height: 2px;
+  background: #ccc;
+  flex: 1;
+  margin: 0 10px;
+}
+
+.duration-text {
+  background: #f4f4f4;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #666;
+  position: absolute;
+  top: -20px;
+}
+
+.nav-icon {
+    color: var(--futa-orange);
+}
+
+.trip-vendor-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.badge-bus {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.vendor-name {
+  font-weight: 600;
+  color: #444;
+}
+
+/* Card Right: Price & Action */
+.card-right {
+  flex: 1;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end; /* Căn phải */
+  background-color: #fafafa;
+}
+
+.price-tag {
+  font-size: 22px;
+  color: var(--futa-orange);
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.seat-status {
+  font-size: 13px;
+  color: #2e7d32;
+  margin-bottom: 15px;
+}
+
+.btn-choose {
+  background: #fff;
+  border: 1px solid var(--futa-orange);
+  color: var(--futa-orange);
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-choose:hover {
+  background: var(--futa-orange);
+  color: white;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  background: #fff;
+  border-radius: 8px;
+  color: #777;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .trip-item-card {
+    flex-direction: column;
+  }
+  .card-left {
+    border-right: none;
+    border-bottom: 1px dashed #eee;
+  }
+  .card-right {
+    align-items: center;
+    background: white;
+  }
+  .schedule-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .mini-search-form {
+    flex-direction: column;
+  }
+  .hero-text h1 {
+      font-size: 24px;
+  }
+}

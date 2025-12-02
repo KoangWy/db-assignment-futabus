@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage.jsx';
 import AuthPage from './pages/AuthPage.jsx';
 import TicketLookup from './pages/TicketLookup.jsx';
+import SchedulePage from './pages/SchedulePage.jsx';
 import Sidebar from "./components/Sidebar.jsx";
 import Page1 from "./pages/Page1.jsx";
 import Page2 from "./pages/Page2.jsx";
@@ -28,6 +29,9 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/login" element={<AuthPage />} />
           <Route path="/lookup" element={<TicketLookup />} />
+          
+          {/* Trang Lịch trình, đặt vé */}
+          <Route path="/schedule" element={<SchedulePage />} />
 
           <Route
             path="/admin"
