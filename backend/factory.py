@@ -7,6 +7,7 @@ from __future__ import annotations
 from flask import Flask, jsonify
 from flask_cors import CORS
 from routes.admin import admin_bp
+from routes.auth import auth_bp
 
 class DefaultConfig:
     JSON_SORT_KEYS = False
@@ -16,7 +17,7 @@ class DefaultConfig:
 # if create a new route, add here like below
 def register_blueprints(app: Flask) -> None:
     app.register_blueprint(admin_bp, url_prefix="/api/admin")
-
+    app.register_blueprint(auth_bp, url_prefix="/api")
 
 def register_error_handlers(app: Flask) -> None:
     @app.errorhandler(404)
