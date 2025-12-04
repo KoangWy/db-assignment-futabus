@@ -1274,7 +1274,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 12px;
   background: #f7f7f7;
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 10px 9px;
   border: 2px solid transparent;
 }
 
