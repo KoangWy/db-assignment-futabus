@@ -36,3 +36,4 @@ __pycache__/
 *.pyd
 
 data.sql
+.vite

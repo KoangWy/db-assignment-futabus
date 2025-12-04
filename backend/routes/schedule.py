@@ -60,6 +60,7 @@ def list_stations():
 def list_trips():
     station_id = request.args.get("station_id")
     travel_date = request.args.get("date")
+    destination_id = request.args.get("destination_id")
 
     if not station_id or not travel_date:
         return jsonify({"error": "station_id and date are required"}), 400
@@ -68,6 +69,13 @@ def list_trips():
         station_id_value = int(station_id)
     except ValueError:
         return jsonify({"error": "station_id must be numeric"}), 400
+
+    destination_id_value = None
+    if destination_id:
+        try:
+            destination_id_value = int(destination_id)
+        except ValueError:
+            return jsonify({"error": "destination_id must be numeric"}), 400
 
     try:
         datetime.strptime(travel_date, "%Y-%m-%d")
@@ -89,6 +97,7 @@ def list_trips():
                 dep.city AS departure_city,
                 arr.station_name AS arrival_name,
                 arr.city AS arrival_city,
+                arr.station_id AS arrival_station_id,
                 b.vehicle_type,
                 op.brand_name,
                 COALESCE((
@@ -108,9 +117,16 @@ def list_trips():
             WHERE dep.station_id = %s
               AND DATE(t.service_date) = %s
               AND t.trip_status = 'Scheduled'
-            ORDER BY t.service_date ASC
         """
-        cursor.execute(query, (station_id_value, travel_date))
+
+        params = [station_id_value, travel_date]
+        if destination_id_value is not None:
+            query += " AND arr.station_id = %s"
+            params.append(destination_id_value)
+
+        query += "\n            ORDER BY t.service_date ASC"
+
+        cursor.execute(query, tuple(params))
         rows = cursor.fetchall()
 
         trips = []
@@ -131,6 +147,8 @@ def list_trips():
                 "brand_name": row["brand_name"],
                 "price": row["seat_price"],
                 "available_seats": available if available is not None else 0,
+                "arrival_station_id": str(row["arrival_station_id"]) if row["arrival_station_id"] is not None else None,
+                "arrival_city": row["arrival_city"],
             }
             trips.append(trip_payload)
 

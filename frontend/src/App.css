@@ -966,7 +966,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .hero-simple {
   position: relative;
   height: 500px; /* Chiều cao banner */
-  background-image: url('https://storage.googleapis.com/futa-busline-cms-upload/futa_bg_140d1a4e10/futa_bg_140d1a4e10.svg'); /* Hoặc thay bằng ảnh xe khách thật */
+  background-image: url('/assets/images/homepage_wallpaper.png');
   background-size: cover;
   background-position: center;
   display: flex;
