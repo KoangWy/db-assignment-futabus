@@ -1,3 +1,6 @@
+/* =====================================================
+   ADMIN DASHBOARD - Modern UI Design
+   ===================================================== */
 
 /* Modal Styles */
 .modal-overlay {
@@ -6,22 +9,41 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal-content {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modal-header {
@@ -29,33 +51,40 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 25px;
-  border-bottom: 2px solid #f0f0f0;
-  background-color: #fff8f0;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(135deg, rgba(232, 73, 29, 0.05) 0%, #fff 100%);
 }
 
 .modal-header h3 {
   margin: 0;
-  color: var(--futa-orange);
+  background: linear-gradient(135deg, #e8491d 0%, #ff6b3d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 20px;
+  font-weight: 700;
 }
 
 .close-btn {
-  background: none;
+  background: #f3f4f6;
   border: none;
-  font-size: 28px;
+  font-size: 24px;
   cursor: pointer;
-  color: #666;
-  width: 30px;
-  height: 30px;
+  color: #6b7280;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
   line-height: 1;
+  border-radius: 50%;
+  transition: all 0.2s ease;
 }
 
 .close-btn:hover {
-  color: var(--futa-orange);
+  background: #e5e7eb;
+  color: #e8491d;
 }
 
 .modal-body {
@@ -64,8 +93,10 @@
 
 .info-section {
   margin-bottom: 25px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #f0f0f0;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
 }
 
 .info-section:last-child {
@@ -74,91 +105,113 @@
 }
 
 .info-section h4 {
-  color: var(--futa-orange);
-  margin: 0 0 15px 0;
-  font-size: 16px;
-  font-weight: 600;
+  color: #e8491d;
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-section h4::before {
+  content: '';
+  width: 4px;
+  height: 16px;
+  background: linear-gradient(135deg, #e8491d 0%, #ff6b3d 100%);
+  border-radius: 2px;
 }
 
 .info-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px dashed #eee;
+  padding: 12px 0;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .info-row:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
 .info-label {
   font-weight: 600;
-  color: #555;
+  color: #6b7280;
   font-size: 14px;
 }
 
 .info-value {
-  color: #333;
+  color: #111827;
   font-size: 14px;
   text-align: right;
+  font-weight: 600;
 }
 
 .info-value.price {
-  color: var(--futa-orange);
-  font-weight: 700;
-  font-size: 16px;
+  background: linear-gradient(135deg, #e8491d 0%, #ff6b3d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  font-size: 18px;
 }
 
 .status-badge {
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .status-issued {
-  background-color: #e3f2fd;
+  background: linear-gradient(135deg, rgba(25, 118, 210, 0.1) 0%, rgba(25, 118, 210, 0.05) 100%);
   color: #1976d2;
 }
 
 .status-used {
-  background-color: #e8f5e9;
-  color: #388e3c;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+  color: #10b981;
 }
 
 .status-refunded {
-  background-color: #fff3e0;
-  color: #f57c00;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+  color: #f59e0b;
 }
 
 .status-cancelled {
-  background-color: #ffebee;
-  color: #c62828;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+  color: #ef4444;
 }
 
 .modal-footer {
-  padding: 15px 25px;
-  border-top: 1px solid #f0f0f0;
+  padding: 20px 25px;
+  border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: flex-end;
-  background-color: #fafafa;
+  background: #f9fafb;
 }
 
 .close-modal-btn {
-  padding: 10px 24px;
-  background-color: var(--futa-orange);
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #e8491d 0%, #ff6b3d 100%);
   color: white;
   border: none;
-  border-radius: 6px;
-  font-weight: 600;
+  border-radius: 8px;
+  font-weight: 700;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(232, 73, 29, 0.4);
 }
 
 .close-modal-btn:hover {
-  background-color: var(--futa-dark-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(232, 73, 29, 0.5);
 }
 
 /* ===== Layout chung ===== */

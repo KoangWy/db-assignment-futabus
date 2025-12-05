@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { FiUser, FiLogOut, FiMenu } from 'react-icons/fi';
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [user, setUser] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Kiểm tra user mỗi khi Header load
+  // Check user on Header load
   useEffect(() => {
     const loggedInUser = localStorage.getItem('user');
     if (loggedInUser) {
       try {
         setUser(JSON.parse(loggedInUser));
       } catch (e) {
-        console.error("Lỗi đọc dữ liệu user", e);
-        localStorage.removeItem('user'); // Xóa nếu dữ liệu lỗi
+        console.error("Error reading user data", e);
+        localStorage.removeItem('user');
       }
     }
+  }, []);
+
+  // Add scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleLogout = () => {
@@ -24,32 +36,56 @@ const Header = () => {
     navigate('/login');
   };
 
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <nav className="header">
-      <div className="header-logo" onClick={() => navigate('/')} style={{cursor: 'pointer'}}>
-        FUTABUS
+    <nav className={`header ${isScrolled ? 'header-scrolled' : ''}`}>
+      <div 
+        className="header-logo" 
+        onClick={() => navigate('/')} 
+        style={{ cursor: 'pointer' }}
+      >
+        🚌 VIETBUS
       </div>
+      
       <ul className="header-nav">
-        <li onClick={() => navigate('/')}>Homepage</li>
-        <li onClick={() => navigate('/schedule')}>Schedule</li>
-        <li onClick={() => navigate('/lookup')}>Lookup</li>
+        <li 
+          onClick={() => navigate('/')}
+          className={isActive('/') ? 'active' : ''}
+        >
+          Homepage
+        </li>
+        <li 
+          onClick={() => navigate('/schedule')}
+          className={isActive('/schedule') ? 'active' : ''}
+        >
+          Schedule
+        </li>
+        <li 
+          onClick={() => navigate('/lookup')}
+          className={isActive('/lookup') ? 'active' : ''}
+        >
+          Lookup
+        </li>
       </ul>
       
       {user ? (
-        <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-          <span style={{ fontWeight: 'bold', color: '#f26522' }}>
-            Hi, {user.name}
-          </span>
+        <div className="user-menu">
+          <div className="user-info">
+            <FiUser className="user-icon" />
+            <span className="user-name">Hi, {user.name}</span>
+          </div>
           <button 
-            className="login-button" 
+            className="logout-button" 
             onClick={handleLogout}
-            style={{ backgroundColor: '#666', fontSize: '14px' }}
           >
-            Logout
+            <FiLogOut />
+            <span>Logout</span>
           </button>
         </div>
       ) : (
         <button className="login-button" onClick={() => navigate('/login')}>
+          <FiUser style={{ marginRight: '8px' }} />
           Login
         </button>
       )}
