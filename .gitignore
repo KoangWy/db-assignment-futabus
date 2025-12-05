@@ -38,3 +38,4 @@ __pycache__/
 data.sql
 mockdata.sql
 .vite
+backend/utils/database.py
