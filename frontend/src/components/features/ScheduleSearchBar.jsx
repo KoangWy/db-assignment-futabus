@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FiMapPin, FiCalendar, FiSearch } from 'react-icons/fi';
 
 export default function ScheduleSearchBar({
@@ -10,6 +10,13 @@ export default function ScheduleSearchBar({
     stationsLoading = false,
 }) {
     const hasStations = stations.length > 0;
+
+    // Auto-pick the first station if none is selected once stations are loaded
+    useEffect(() => {
+        if (!stationsLoading && hasStations && !searchParams.station_id && typeof onParamsChange === 'function') {
+            onParamsChange('station_id', stations[0].station_id);
+        }
+    }, [stationsLoading, hasStations, searchParams.station_id, onParamsChange, stations]);
 
     const handleChange = (field) => (event) => {
         if (typeof onParamsChange === 'function') {

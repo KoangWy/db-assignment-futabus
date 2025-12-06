@@ -5,13 +5,14 @@ import TripCard from '../components/features/TripCard';
 import ScheduleSearchBar from '../components/features/ScheduleSearchBar';
 import '../App.css';
 
-const API_BASE_URL = 'http://localhost:5000/api/schedule';
+const API_BASE_URL = 'http://127.0.0.1:5000/api/schedule';
 
 export default function SchedulePage() {
     const initialDate = useMemo(() => new Date().toISOString().split('T')[0], []);
     const [stations, setStations] = useState([]);
+    const [stationsLoading, setStationsLoading] = useState(false);
     const [searchParams, setSearchParams] = useState({
-        station_id: '',
+        station_id: '1',
         date: initialDate,
     });
     
@@ -54,30 +55,32 @@ export default function SchedulePage() {
     // Load stations on mount
     useEffect(() => {
         const fetchStations = async () => {
+            setStationsLoading(true);
             try {
                 const response = await fetch(`${API_BASE_URL}/stations`);
                 if (!response.ok) {
                     throw new Error('Failed to load stations');
                 }
                 const payload = await response.json();
-                const list = payload.data ?? [];
+                const list = (payload.data ?? []).map((s) => ({
+                    ...s,
+                    station_id: s.station_id?.toString() ?? '',
+                }));
                 setStations(list);
 
                 const fallbackStation = list[0]?.station_id;
-                if (fallbackStation) {
-                    let targetStation = fallbackStation;
-                    setSearchParams((prev) => {
-                        if (prev.station_id) {
-                            targetStation = prev.station_id;
-                            return prev;
-                        }
-                        return { ...prev, station_id: fallbackStation };
-                    });
-                    await performSearch(targetStation, initialDate);
+                const currentStation = searchParams.station_id || fallbackStation;
+
+                if (currentStation) {
+                    // Keep searchParams in sync and fire one initial search
+                    setSearchParams((prev) => ({ ...prev, station_id: currentStation }));
+                    await performSearch(currentStation, initialDate);
                 }
             } catch (error) {
                 console.error('Unable to fetch stations', error);
                 setErrorMessage('Unable to load stations. Please refresh the page.');
+            } finally {
+                setStationsLoading(false);
             }
         };
 
@@ -130,6 +133,7 @@ export default function SchedulePage() {
                             onParamsChange={handleParamChange}
                             onSubmit={handleSearch}
                             loading={loading}
+                            stationsLoading={stationsLoading}
                         />
 
                         {/* Quick filters */}

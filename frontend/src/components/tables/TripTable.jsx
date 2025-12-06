@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiEdit2, FiTrash2, FiEye, FiPlus, FiCalendar, FiClock } from 'react-icons/fi';
 
-const TripTable = ({ onAdd, onEdit, onDelete, onViewDetail }) => {
+const TripTable = ({ onAdd, onEdit, onDelete, onViewDetail, refreshToken = 0 }) => {
     const [trips, setTrips] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const TripTable = ({ onAdd, onEdit, onDelete, onViewDetail }) => {
 
     useEffect(() => {
         fetchTrips();
-    }, []);
+    }, [refreshToken]);
 
     const fetchTrips = async () => {
         try {

@@ -5,11 +5,23 @@ import Footer from '../components/layout/Footer';
 import RouteTable from '../components/tables/RouteTable';
 import TripTable from '../components/tables/TripTable';
 import { RouteDetailModal, TripDetailModal } from '../components/modals/DetailModals';
+import RouteFormModal from '../components/modals/RouteFormModal';
+import TripFormModal from '../components/modals/TripFormModal';
 
 const ManageTrips = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [activeTab, setActiveTab] = useState('routes'); // 'routes' or 'trips'
+  const [isRouteFormOpen, setIsRouteFormOpen] = useState(false);
+  const [routeFormMode, setRouteFormMode] = useState('create');
+  const [editingRoute, setEditingRoute] = useState(null);
+  const [routeRefreshKey, setRouteRefreshKey] = useState(0);
+  const [operatorOptions, setOperatorOptions] = useState([]);
+  
+  const [isTripFormOpen, setIsTripFormOpen] = useState(false);
+  const [tripFormMode, setTripFormMode] = useState('create');
+  const [editingTrip, setEditingTrip] = useState(null);
+  const [tripRefreshKey, setTripRefreshKey] = useState(0);
   
   // Modal states
   const [selectedRoute, setSelectedRoute] = useState(null);
@@ -43,11 +55,15 @@ const ManageTrips = () => {
 
   // Route handlers
   const handleRouteAdd = () => {
-    alert('Add route functionality - To be implemented with form modal');
+    setRouteFormMode('create');
+    setEditingRoute(null);
+    setIsRouteFormOpen(true);
   };
 
   const handleRouteEdit = (route) => {
-    alert(`Edit route ${route.route_id} - To be implemented with form modal`);
+    setRouteFormMode('edit');
+    setEditingRoute(route);
+    setIsRouteFormOpen(true);
   };
 
   const handleRouteDelete = (route) => {
@@ -60,18 +76,77 @@ const ManageTrips = () => {
     setSelectedRoute(route);
   };
 
+  const handleRouteFormSuccess = () => {
+    setIsRouteFormOpen(false);
+    setEditingRoute(null);
+    setRouteRefreshKey((prev) => prev + 1);
+  };
+
+  const handleRoutesLoaded = (routesList) => {
+    if (!Array.isArray(routesList)) return;
+    const seen = new Set();
+    const operators = [];
+    routesList.forEach((r) => {
+      if (r.operator_id && !seen.has(r.operator_id)) {
+        seen.add(r.operator_id);
+        operators.push({ operator_id: r.operator_id, operator_name: r.operator_name });
+      }
+    });
+    setOperatorOptions(operators);
+  };
+
+  const handleTripFormSuccess = () => {
+    setIsTripFormOpen(false);
+    setEditingTrip(null);
+    setTripRefreshKey((prev) => prev + 1);
+  };
+
   // Trip handlers
   const handleTripAdd = () => {
-    alert('Add trip functionality - To be implemented with form modal');
+    setTripFormMode('create');
+    setEditingTrip(null);
+    setIsTripFormOpen(true);
   };
 
   const handleTripEdit = (trip) => {
-    alert(`Edit trip ${trip.trip_id} - To be implemented with form modal`);
+    setTripFormMode('edit');
+    setEditingTrip(trip);
+    setIsTripFormOpen(true);
   };
 
-  const handleTripDelete = (trip) => {
-    if (window.confirm(`Are you sure you want to cancel trip #${trip.trip_id}?`)) {
-      alert(`Cancel trip ${trip.trip_id} - To be implemented with API call`);
+  const handleTripDelete = async (trip) => {
+    // Show confirmation dialog with trip details
+    const confirmMessage = `Are you sure you want to cancel trip #${trip.trip_id}?\n\n` +
+      `Route: ${trip.route_name}\n` +
+      `Bus: ${trip.bus_plate}\n` +
+      `Departure: ${new Date(trip.service_date).toLocaleString()}\n\n` +
+      `Note: This will cancel the trip and may affect passengers with confirmed tickets.`;
+    
+    if (!window.confirm(confirmMessage)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/api/trips/${trip.trip_id}`, {
+        method: 'DELETE',
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        // Handle trigger validation errors
+        if (response.status === 409) {
+          alert(`Cannot cancel trip:\n\n${data.error}\n\nPlease refund or cancel the tickets first.`);
+        } else {
+          throw new Error(data.error || 'Failed to cancel trip');
+        }
+        return;
+      }
+      
+      alert('Trip cancelled successfully!');
+      setTripRefreshKey(prev => prev + 1);
+    } catch (error) {
+      alert(`Error cancelling trip: ${error.message}`);
     }
   };
 
@@ -158,6 +233,8 @@ const ManageTrips = () => {
                 onEdit={handleRouteEdit}
                 onDelete={handleRouteDelete}
                 onViewDetail={handleRouteViewDetail}
+                refreshToken={routeRefreshKey}
+                onRoutesLoaded={handleRoutesLoaded}
               />
             )}
 
@@ -167,6 +244,7 @@ const ManageTrips = () => {
                 onEdit={handleTripEdit}
                 onDelete={handleTripDelete}
                 onViewDetail={handleTripViewDetail}
+                refreshToken={tripRefreshKey}
               />
             )}
           </div>
@@ -181,7 +259,34 @@ const ManageTrips = () => {
         />
       )}
 
-      {selectedTrip && (
+      {isRouteFormOpen && (
+        <RouteFormModal
+          isOpen={isRouteFormOpen}
+          mode={routeFormMode}
+          route={editingRoute}
+          onClose={() => {
+            setIsRouteFormOpen(false);
+            setEditingRoute(null);
+          }}
+          onSuccess={handleRouteFormSuccess}
+          operatorOptions={operatorOptions}
+        />
+      )}
+
+      {isTripFormOpen && (
+        <TripFormModal
+          isOpen={isTripFormOpen}
+          mode={tripFormMode}
+          trip={editingTrip}
+          onClose={() => {
+            setIsTripFormOpen(false);
+            setEditingTrip(null);
+          }}
+          onSuccess={handleTripFormSuccess}
+        />
+      )}
+
+      <Footer />
         <TripDetailModal
           trip={selectedTrip}
           onClose={() => setSelectedTrip(null)}

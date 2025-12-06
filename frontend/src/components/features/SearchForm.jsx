@@ -142,6 +142,13 @@ const SearchForm = () => {
     ));
   };
 
+  // Auto-load trips once stations & defaults are ready (one-shot)
+  useEffect(() => {
+    if (!stationsLoading && stations.length > 0 && !hasSearched && formValues.departure && formValues.date) {
+      handleSearch();
+    }
+  }, [stationsLoading, stations.length, hasSearched, formValues.departure, formValues.date]);
+
   return (
     <div className="search-widget">
       <form className="search-form" onSubmit={handleSearch}>

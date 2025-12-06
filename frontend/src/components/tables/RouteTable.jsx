@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiEdit2, FiTrash2, FiEye, FiPlus } from 'react-icons/fi';
 
-const RouteTable = ({ onAdd, onEdit, onDelete, onViewDetail }) => {
+const RouteTable = ({ onAdd, onEdit, onDelete, onViewDetail, refreshToken = 0, onRoutesLoaded }) => {
     const [routes, setRoutes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ const RouteTable = ({ onAdd, onEdit, onDelete, onViewDetail }) => {
 
     useEffect(() => {
         fetchRoutes();
-    }, []);
+    }, [refreshToken]);
 
     const fetchRoutes = async () => {
         try {
@@ -22,7 +22,11 @@ const RouteTable = ({ onAdd, onEdit, onDelete, onViewDetail }) => {
                 throw new Error(data.error || 'Failed to fetch routes');
             }
             
-            setRoutes(data.data || []);
+            const routesPayload = data.data || [];
+            setRoutes(routesPayload);
+            if (onRoutesLoaded) {
+                onRoutesLoaded(routesPayload);
+            }
             setError(null);
         } catch (err) {
             setError(err.message);
@@ -46,12 +50,12 @@ const RouteTable = ({ onAdd, onEdit, onDelete, onViewDetail }) => {
             route.arrival_city.toLowerCase().includes(searchTerm.toLowerCase()) ||
             route.departure_station.toLowerCase().includes(searchTerm.toLowerCase());
         
-        const matchesOperator = filterOperator === 'all' || route.operator_id === filterOperator;
+        const matchesOperator = filterOperator === 'all' || route.operator_name === filterOperator;
         
         return matchesSearch && matchesOperator;
     });
 
-    const uniqueOperators = [...new Set(routes.map(r => r.operator_id))];
+    const uniqueOperators = [...new Set(routes.map(r => r.operator_name))];
 
     if (loading) {
         return (
@@ -85,6 +89,16 @@ const RouteTable = ({ onAdd, onEdit, onDelete, onViewDetail }) => {
                         onChange={(e) => setSearchTerm(e.target.value)}
                         className="table-input"
                     />
+                    <select
+                        value={filterOperator}
+                        onChange={(e) => setFilterOperator(e.target.value)}
+                        className="table-select"
+                    >
+                        <option value="all">All Operators</option>
+                        {uniqueOperators.map(opName => (
+                            <option key={opName} value={opName}>{opName}</option>
+                        ))}
+                    </select>
                 </div>
 
                 <button 
@@ -152,13 +166,6 @@ const RouteTable = ({ onAdd, onEdit, onDelete, onViewDetail }) => {
                                                     title="Edit"
                                                 >
                                                     <FiEdit2 />
-                                                </button>
-                                                <button
-                                                    onClick={() => onDelete && onDelete(route)}
-                                                    className="icon-button action-delete"
-                                                    title="Delete"
-                                                >
-                                                    <FiTrash2 />
                                                 </button>
                                             </div>
                                         </td>
