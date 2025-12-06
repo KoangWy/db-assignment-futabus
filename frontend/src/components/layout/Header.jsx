@@ -67,8 +67,15 @@ const Header = () => {
         >
           Lookup
         </li>
+        {user && user.role === 'STAFF' && (
+          <li 
+            onClick={() => navigate('/manage-trips')}
+            className={isActive('/manage-trips') ? 'active' : ''}
+          >
+            Manage Routes and Trips
+          </li>
+        )}
       </ul>
-      
       {user ? (
         <div className="user-menu">
           <div className="user-info">

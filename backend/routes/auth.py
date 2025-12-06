@@ -100,12 +100,13 @@ def login():
             user_info = cursor.fetchone()
         elif role == 'staff':
             cursor.execute("""
-                SELECT s.staff_id as id, p.person_name as name
+                SELECT s.staff_id as id, p.person_name as name, s.operator_id
                 FROM staff s
                 JOIN person p ON s.person_id = p.person_id
                 WHERE p.account_id = %s
             """, (account_id,))
             user_info = cursor.fetchone()
+            # Thêm operator_id vào để dùng trong manage trips & routes
         elif role == 'admin':
             cursor.execute("""
                 SELECT s.staff_id as id, p.person_name as name

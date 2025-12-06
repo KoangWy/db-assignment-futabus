@@ -11,6 +11,8 @@ from routes.admin import admin_bp
 from routes.auth import auth_bp
 from routes.ticket import ticket_bp
 from routes.schedule import schedule_bp
+from routes.routes import routes_bp
+from routes.trips import trips_bp
 
 class DefaultConfig:
     JSON_SORT_KEYS = False
@@ -27,6 +29,8 @@ def register_blueprints(app: Flask) -> None:
     app.register_blueprint(auth_bp, url_prefix="/api")
     app.register_blueprint(ticket_bp, url_prefix="/api/tickets")
     app.register_blueprint(schedule_bp, url_prefix="/api/schedule")
+    app.register_blueprint(routes_bp, url_prefix="/api/routes")
+    app.register_blueprint(trips_bp, url_prefix="/api/trips")
 
 def register_error_handlers(app: Flask) -> None:
     @app.errorhandler(404)

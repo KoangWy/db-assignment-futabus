@@ -1,33 +1,27 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import TripCard from '../components/features/TripCard';
 import ScheduleSearchBar from '../components/features/ScheduleSearchBar';
 import '../App.css';
 
-const API_BASE_URL = 'http://127.0.0.1:5000/api/schedule'; // này là IP của máy t mới chạy dc, ae ai lỗi thì thay lại bằng localhost nha
+const API_BASE_URL = 'http://localhost:5000/api/schedule';
 
 export default function SchedulePage() {
-    const location = useLocation();
     const initialDate = useMemo(() => new Date().toISOString().split('T')[0], []);
     const [stations, setStations] = useState([]);
-    const [stationsLoading, setStationsLoading] = useState(true);
-    
-    // Khôi phục state từ navigation nếu có
-    const restoredState = location.state?.searchState;
-    const [searchParams, setSearchParams] = useState(restoredState?.searchParams || {
+    const [searchParams, setSearchParams] = useState({
         station_id: '',
         date: initialDate,
     });
     
-    // Store search results - khôi phục từ state nếu có
-    const [trips, setTrips] = useState(restoredState?.trips || []);
+    // Store search results
+    const [trips, setTrips] = useState([]);
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    // Filter state - khôi phục từ state nếu có
-    const [filters, setFilters] = useState(restoredState?.filters || {
+    // Filter state
+    const [filters, setFilters] = useState({
         vehicleType: 'all',
         sortBy: 'time',
     });
@@ -60,7 +54,6 @@ export default function SchedulePage() {
     // Load stations on mount
     useEffect(() => {
         const fetchStations = async () => {
-            setStationsLoading(true);
             try {
                 const response = await fetch(`${API_BASE_URL}/stations`);
                 if (!response.ok) {
@@ -69,11 +62,6 @@ export default function SchedulePage() {
                 const payload = await response.json();
                 const list = payload.data ?? [];
                 setStations(list);
-
-                // Nếu có restored state, không cần fetch lại trips
-                if (restoredState?.trips && restoredState.trips.length > 0) {
-                    return;
-                }
 
                 const fallbackStation = list[0]?.station_id;
                 if (fallbackStation) {
@@ -90,13 +78,11 @@ export default function SchedulePage() {
             } catch (error) {
                 console.error('Unable to fetch stations', error);
                 setErrorMessage('Unable to load stations. Please refresh the page.');
-            } finally {
-                setStationsLoading(false);
             }
         };
 
         fetchStations();
-    }, [performSearch, initialDate, restoredState]);
+    }, [performSearch, initialDate]);
 
     const handleParamChange = useCallback((field, value) => {
         setSearchParams((prev) => ({ ...prev, [field]: value }));
@@ -144,7 +130,6 @@ export default function SchedulePage() {
                             onParamsChange={handleParamChange}
                             onSubmit={handleSearch}
                             loading={loading}
-                            stationsLoading={stationsLoading}
                         />
 
                         {/* Quick filters */}
@@ -192,11 +177,6 @@ export default function SchedulePage() {
                                     trip={trip}
                                     availableSeats={available}
                                     priceLabel={formatCurrency(trip.price)}
-                                    searchState={{
-                                        searchParams,
-                                        trips,
-                                        filters
-                                    }}
                                 />
                             );
                         })}
